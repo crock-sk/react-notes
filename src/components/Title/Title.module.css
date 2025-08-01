@@ -1,0 +1,41 @@
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 242%;
+  text-align: center;
+  color: #131927;
+}
+
+.arrowButton {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .title {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #4e61f6;
+  }
+
+  .arrowButton {
+    position: absolute;
+    left: 25px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 100px;
+
+    background: transparent;
+    border: none;
+  }
+
+  .arrowButton:active {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+  }
+}
