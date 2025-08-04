@@ -4,6 +4,7 @@ import css from "./App.module.css";
 import NoteForm from "../NoteForm/NoteForm";
 import Main from "../Main/Main";
 import Title from "../Title/Title";
+import Home from "../Home/Home";
 
 // const initialNotes = [
 //   { id: "1", title: "Note 1", content: "Content 1" },
@@ -20,7 +21,6 @@ function App() {
     const storedNotes = localStorage.getItem("notes");
     return storedNotes ? JSON.parse(storedNotes) : [];
   });
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -42,6 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route
           path="/notes/:notesId?"
           element={
@@ -62,6 +63,7 @@ function App() {
             </div>
           }
         />
+        <Route path="*" element={<h1>PAGE NOT FOUND 404</h1>} />
       </Routes>
     </BrowserRouter>
   );
