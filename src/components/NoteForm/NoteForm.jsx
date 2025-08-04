@@ -1,32 +1,43 @@
 import css from "./NoteForm.module.css";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router";
 
-export default function NoteForm({ notes, setNotes, activeNote, setActiveNote }) {
+export default function NoteForm({ notes, setNotes }) {
+  const { notesId } = useParams();
   const [showMessage, setShowMessage] = useState(false);
   const [title, setTitle] = useState("");
-  const [note, setNote] = useState("");
+  const [content, setContent] = useState("");
+
+  // useEffect(() => {
+  //     setTitle(activeNote.title || "");
+  //     setNote(activeNote.note || "");
+  // }, [activeNote]);
+
+  const note = notes.find((note) => note.id == notesId);
 
   useEffect(() => {
-      setTitle(activeNote.title || "");
-      setNote(activeNote.note || "");
-  }, [activeNote]);
+    setTitle(note?.title || "");
+    setContent(note?.content || "");
+  }, [note]);
+
+
 
   const handleBlur = () => {
-    if (!title.trim() && !note.trim()) return;
+    if (!title.trim() && !content.trim()) return;
 
     const updatedNote = {
-      ...activeNote,
+      id: notesId,
       title: title.trim(),
-      note: note.trim(),
+      content: content.trim(),
     };
 
-    if (notes.find((note) => note.id === updatedNote.id)) {
+    if (note) {
       setNotes((prev) =>
-        prev.map((note) => (note.id === updatedNote.id ? updatedNote : note))
+        prev.map((note) => (note.id === notesId ? updatedNote : note))
       );
     } else {
       setNotes((prev) => [...prev, updatedNote]);
-      setActiveNote(updatedNote);
+      // setActiveNote(updatedNote);
     }
 
     setShowMessage(true);
@@ -54,13 +65,13 @@ export default function NoteForm({ notes, setNotes, activeNote, setActiveNote })
         </div>
 
         <div className={css.formGroup}>
-          <label htmlFor="note">Note</label>
+          <label htmlFor="content">Note</label>
           <textarea
-            id="note"
-            name="note"
+            id="content"
+            name="content"
             placeholder="Your content here"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             onBlur={handleBlur}
             className={css.textarea}
           />

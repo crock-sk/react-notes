@@ -9,11 +9,15 @@
 .listItem {
   background-color: #f9fafb;
   padding: 4px 0px;
-  display: flex;
-  justify-content: space-between;
   min-height: 55px;
   align-items: center;
 }
+
+.navLink{
+  display: flex;
+  justify-content: space-between;
+}
+
 
 .title {
   font-weight: 400;
@@ -21,6 +25,7 @@
   line-height: 150%;
   color: #131927;
 }
+
 
 .button {
   align-self: flex-end;
@@ -70,12 +75,12 @@
     width: 358px;
     padding: 0;
   }
-
+  
   .listItem {
     padding-left: 12px;
     padding-right: 16px;
   }
-
+  
   .wrapper {
     display: flex;
     span {
@@ -88,4 +93,9 @@
       margin-right: 12px;
     }
   }
+}
+
+.active > .title {
+  font-weight: bold;
+  text-decoration: underline;
 }

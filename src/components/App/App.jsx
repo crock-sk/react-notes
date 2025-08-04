@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
 import css from "./App.module.css";
 import NoteForm from "../NoteForm/NoteForm";
 import Main from "../Main/Main";
@@ -19,10 +20,7 @@ function App() {
     const storedNotes = localStorage.getItem("notes");
     return storedNotes ? JSON.parse(storedNotes) : [];
   });
-  const [activeNote, setActiveNote] = useState({
-    title: "",
-    note: "",
-  });
+
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -42,26 +40,30 @@ function App() {
   }, [notes]);
 
   return (
-    <div className={css.container}>
-      {showMain && (
-        <Main
-          setIsOpen={setIsOpen}
-          setActiveNote={setActiveNote}
-          notes={notes}
-        ></Main>
-      )}
-      {showForm && (
-        <>
-          {isMobile && <Title setIsOpen={setIsOpen} />}
-          <NoteForm
-            notes={notes}
-            setNotes={setNotes}
-            activeNote={activeNote}
-            setActiveNote={setActiveNote}
-          />
-        </>
-      )}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/notes/:notesId?"
+          element={
+            <div className={css.container}>
+              {showMain && (
+                <Main
+                  isOpen={isOpen}
+                  setIsOpen={setIsOpen}
+                  notes={notes}
+                ></Main>
+              )}
+              {showForm && (
+                <>
+                  {isMobile && <Title isOpen={isOpen} setIsOpen={setIsOpen} />}
+                  <NoteForm notes={notes} setNotes={setNotes} />
+                </>
+              )}
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
