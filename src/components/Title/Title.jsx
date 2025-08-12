@@ -2,7 +2,6 @@ import css from "./Title.module.css";
 import { Link } from "react-router";
 
 const Title = ({ isOpen, setIsOpen }) => {
-  console.log(isOpen);
   return (
     <h1 className={css.title}>
       <Link

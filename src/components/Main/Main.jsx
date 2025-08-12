@@ -1,12 +1,10 @@
 import css from "./Main.module.css";
-import { v4 as uuidv4 } from "uuid";
 import NoteList from "../NoteList/NoteList";
 import Title from "../Title/Title";
 import { Link } from "react-router";
 
 const Main = ({ isOpen, setIsOpen, notes }) => {
-  console.log("isOpen", isOpen);
-  const id = uuidv4();
+  const id = crypto.randomUUID();
   return (
     <div className={css.main}>
       <Title isOpen={isOpen} setIsOpen={setIsOpen}/>
@@ -34,7 +32,7 @@ const Main = ({ isOpen, setIsOpen, notes }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className={css.textBtn}>Add Note</span>
+              <span className={css.textBtn}>Add Note</span>      
             </Link>
           </button>
         </div>

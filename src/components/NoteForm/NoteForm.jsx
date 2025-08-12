@@ -7,20 +7,15 @@ export default function NoteForm({ notes, setNotes }) {
   const [showMessage, setShowMessage] = useState(false);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-
-  // useEffect(() => {
-  //     setTitle(activeNote.title || "");
-  //     setNote(activeNote.note || "");
-  // }, [activeNote]);
+  const [priority, setPriority] = useState("");
 
   const note = notes.find((note) => note.id == notesId);
 
   useEffect(() => {
     setTitle(note?.title || "");
     setContent(note?.content || "");
+    setPriority(note?.priority || "");
   }, [note]);
-
-
 
   const handleBlur = () => {
     if (!title.trim() && !content.trim()) return;
@@ -29,6 +24,7 @@ export default function NoteForm({ notes, setNotes }) {
       id: notesId,
       title: title.trim(),
       content: content.trim(),
+      priority,
     };
 
     if (note) {
@@ -37,7 +33,6 @@ export default function NoteForm({ notes, setNotes }) {
       );
     } else {
       setNotes((prev) => [...prev, updatedNote]);
-      // setActiveNote(updatedNote);
     }
 
     setShowMessage(true);
@@ -62,6 +57,34 @@ export default function NoteForm({ notes, setNotes }) {
             onBlur={handleBlur}
             className={css.input}
           />
+        </div>
+
+        <div className={css.formGroup}>
+          <label htmlFor="priority">Priority</label>
+          <select
+            id="priority"
+            name="priority"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
+            onBlur={handleBlur}
+            className={`${css.select} ${
+              priority ? css[priority] : css.placeholder
+            }`}
+            required
+          >
+            <option value="" disabled className={css.placeholder}>
+              Priority
+            </option>
+            <option value="low" className={css.low}>
+              Low
+            </option>
+            <option value="medium" className={css.medium}>
+              Medium
+            </option>
+            <option value="high" className={css.high}>
+              High
+            </option>
+          </select>
         </div>
 
         <div className={css.formGroup}>
