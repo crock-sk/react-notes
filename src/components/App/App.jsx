@@ -55,6 +55,7 @@ function App() {
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
                   notes={notes}
+                  setNotes={setNotes}
                 ></Main>
               )}
               {showForm && (

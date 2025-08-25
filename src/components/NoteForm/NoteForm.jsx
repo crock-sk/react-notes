@@ -33,16 +33,15 @@ export default function NoteForm({ notes, setNotes }) {
     }
 
     const updatedNote = {
-      id: notesId,
       title: title.trim(),
       content: content.trim(),
-      priority,
+      priority: priority || 'low',
     };
 
     if (note) {
-      await updateNote(updatedNote);
+      await updateNote(notesId, updatedNote);
       setNotes((prev) =>
-        prev.map((note) => (note.id === notesId ? updatedNote : note))
+        prev.map((note) => (note.id === notesId ? {id:notesId, ...updatedNote} : note))
       );
     } else {
       const newNote = await createNote(updatedNote);
