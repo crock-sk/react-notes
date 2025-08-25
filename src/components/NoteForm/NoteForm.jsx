@@ -35,7 +35,7 @@ export default function NoteForm({ notes, setNotes }) {
     const updatedNote = {
       title: title.trim(),
       content: content.trim(),
-      priority: priority || 'low',
+      priority: priority || "low",
     };
 
     if (note) {

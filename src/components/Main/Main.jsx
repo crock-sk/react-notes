@@ -10,17 +10,14 @@ const Main = ({ isOpen, setIsOpen, notes, setNotes }) => {
   const handleAddNote = async () => {
     setIsOpen(true);
 
-    // создаём "черновик" заметки в базе
     const newNote = await createNote({
       title: "",
       content: "",
       priority: "",
     });
 
-    // добавляем в локальное состояние
     setNotes((prev) => [...prev, newNote]);
 
-    // редиректим на форму с Firestore id
     navigate(`/notes/${newNote.id}`);
   };
   return (
@@ -29,7 +26,6 @@ const Main = ({ isOpen, setIsOpen, notes, setNotes }) => {
       <div className={css.wrapper}>
         <div className={css.buttonWrapper}>
           <button className={css.button} onClick={handleAddNote}>
-            {/* <Link to={`/notes/${id}`} className={css.link}> */}
             <svg
               width="24"
               height="24"
@@ -46,7 +42,6 @@ const Main = ({ isOpen, setIsOpen, notes, setNotes }) => {
               />
             </svg>
             <span className={css.textBtn}>Add Note</span>
-            {/* </Link> */}
           </button>
         </div>
         <NoteList notes={notes} setIsOpen={setIsOpen} />

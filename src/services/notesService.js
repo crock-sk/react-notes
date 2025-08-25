@@ -23,7 +23,7 @@ export async function createNote(note) {
 
 export async function updateNote(id, data) {
   const docRef = doc(fireDataBase, "notes", id);
-  await updateDoc(docRef, data); // setDoc перезаписывает документ
+  await updateDoc(docRef, data);
   return {id, ...data};
 }
 
