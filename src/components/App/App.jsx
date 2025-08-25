@@ -5,6 +5,8 @@ import NoteForm from "../NoteForm/NoteForm";
 import Main from "../Main/Main";
 import Title from "../Title/Title";
 import Home from "../Home/Home";
+// import useLocalStorage from "../../hooks/useLocalStorage";
+import { fetchNotes } from "../../services/notesService";
 
 // const initialNotes = [
 //   { id: "1", title: "Note 1", content: "Content 1" },
@@ -17,11 +19,16 @@ import Home from "../Home/Home";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notes, setNotes] = useState(() => {
-    const storedNotes = localStorage.getItem("notes");
-    return storedNotes ? JSON.parse(storedNotes) : [];
-  });
+  const [notes, setNotes] = useState([]);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      const data = await fetchNotes();
+      setNotes(data);
+    };
+    loadNotes();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,10 +41,6 @@ function App() {
 
   const showMain = !isMobile || !isOpen;
   const showForm = (!isMobile && isOpen) || isOpen;
-
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
 
   return (
     <BrowserRouter>

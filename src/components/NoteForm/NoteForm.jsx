@@ -1,6 +1,12 @@
 import css from "./NoteForm.module.css";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import {
+  createNote,
+  updateNote,
+  deleteNote,
+} from "../../services/notesService";
+
 
 export default function NoteForm({ notes, setNotes }) {
   const { notesId } = useParams();
@@ -17,8 +23,14 @@ export default function NoteForm({ notes, setNotes }) {
     setPriority(note?.priority || "");
   }, [note]);
 
-  const handleBlur = () => {
-    if (!title.trim() && !content.trim()) return;
+  const handleBlur = async () => {
+    if (!title.trim() && !content.trim()) {
+      if (note) {
+        await deleteNote(notesId);
+        setNotes((prev) => prev.filter((note) => note.id !== notesId));
+      }
+      return;
+    }
 
     const updatedNote = {
       id: notesId,
@@ -28,11 +40,13 @@ export default function NoteForm({ notes, setNotes }) {
     };
 
     if (note) {
+      await updateNote(updatedNote);
       setNotes((prev) =>
         prev.map((note) => (note.id === notesId ? updatedNote : note))
       );
     } else {
-      setNotes((prev) => [...prev, updatedNote]);
+      const newNote = await createNote(updatedNote);
+      setNotes((prev) => [...prev, newNote]);
     }
 
     setShowMessage(true);
