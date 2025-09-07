@@ -11,7 +11,6 @@ export default function Modal({ setIsModalOpen, setCurrentUser }) {
   useEffect(() => {
     const loadUsers = async () => {
       const data = await fetchUsers();
-      console.log("data:", data);
       setUsers(data);
     };
     loadUsers();

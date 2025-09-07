@@ -8,14 +8,12 @@ import toast from "react-hot-toast";
 const Main = ({ isOpen, setIsOpen, notes, setNotes, currentUser }) => {
   const navigate = useNavigate();
 
-  console.log(currentUser);
-
   const handleAddNote = async () => {
     if (!currentUser) return toast.error("Please select a user first");
 
     setIsOpen(true);
 
-    const newNote = await createNote({
+    const newNote = await createNote(currentUser.id, {
       title: "",
       content: "",
       priority: "",

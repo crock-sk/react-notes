@@ -27,14 +27,6 @@ function App() {
   
 
   useEffect(() => {
-    const loadNotes = async () => {
-      const data = await fetchNotes();
-      setNotes(data);
-    };
-    loadNotes();
-  }, []);
-
-  useEffect(() => {
     if (!currentUser) return;
     const loadNotes = async () => {
       const data = await fetchNotes(currentUser.id);

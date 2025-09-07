@@ -25,7 +25,7 @@ export default function NoteForm({ notes, setNotes, currentUser }) {
   }, [note]);
 
   if (!currentUser) {
-    toast.error("Please select a user first");
+    toast.error("Please select or add a user first!");
   }
 
   const handleBlur = async () => {
