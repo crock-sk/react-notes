@@ -52,7 +52,12 @@ function App() {
       <Toaster />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route
+            path="/"
+            element={
+              <Home setCurrentUser={setCurrentUser} currentUser={currentUser} />
+            }
+          />
           <Route
             path="/notes/:notesId?"
             element={
@@ -76,7 +81,11 @@ function App() {
                   {showForm && (
                     <>
                       {isMobile && (
-                        <Title isOpen={isOpen} setIsOpen={setIsOpen} />
+                        <Title
+                          isOpen={isOpen}
+                          setIsOpen={setIsOpen}
+                          userName={currentUser?.name}
+                        />
                       )}
                       <NoteForm
                         notes={notes}
