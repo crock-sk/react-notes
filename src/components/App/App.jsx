@@ -7,6 +7,8 @@ import Title from "../Title/Title";
 import Home from "../Home/Home";
 // import useLocalStorage from "../../hooks/useLocalStorage";
 import { fetchNotes } from "../../services/notesService";
+import Nav from "../Nav/Nav";
+import { Toaster } from "react-hot-toast";
 
 // const initialNotes = [
 //   { id: "1", title: "Note 1", content: "Content 1" },
@@ -20,7 +22,9 @@ import { fetchNotes } from "../../services/notesService";
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [currentUser, setCurrentUser] = useState('');
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  
 
   useEffect(() => {
     const loadNotes = async () => {
@@ -29,6 +33,15 @@ function App() {
     };
     loadNotes();
   }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const loadNotes = async () => {
+      const data = await fetchNotes(currentUser.id);
+      setNotes(data);
+    };
+    loadNotes();
+  }, [currentUser]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,33 +56,51 @@ function App() {
   const showForm = (!isMobile && isOpen) || isOpen;
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/notes/:notesId?"
-          element={
-            <div className={css.container}>
-              {showMain && (
-                <Main
-                  isOpen={isOpen}
-                  setIsOpen={setIsOpen}
-                  notes={notes}
-                  setNotes={setNotes}
-                ></Main>
-              )}
-              {showForm && (
-                <>
-                  {isMobile && <Title isOpen={isOpen} setIsOpen={setIsOpen} />}
-                  <NoteForm notes={notes} setNotes={setNotes} />
-                </>
-              )}
-            </div>
-          }
-        />
-        <Route path="*" element={<h1>PAGE NOT FOUND 404</h1>} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <Toaster />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/notes/:notesId?"
+            element={
+              <div className={css.container}>
+                {showMain && (
+                  <Main
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}
+                    notes={notes}
+                    setNotes={setNotes}
+                    currentUser={currentUser}
+                  ></Main>
+                )}
+                <div className={css.wrapper}>
+                  {!isMobile && (
+                    <Nav
+                      currentUser={currentUser}
+                      setCurrentUser={setCurrentUser}
+                    />
+                  )}
+                  {showForm && (
+                    <>
+                      {isMobile && (
+                        <Title isOpen={isOpen} setIsOpen={setIsOpen} />
+                      )}
+                      <NoteForm
+                        notes={notes}
+                        setNotes={setNotes}
+                        currentUser={currentUser}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            }
+          />
+          <Route path="*" element={<h1>PAGE NOT FOUND 404</h1>} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 

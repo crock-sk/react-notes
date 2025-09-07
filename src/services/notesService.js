@@ -1,33 +1,31 @@
-import { fireDataBase } from "../firebase";
 import {
   collection,
+  doc,
   getDocs,
   addDoc,
   updateDoc,
   deleteDoc,
-  doc
 } from "firebase/firestore";
+import { fireDataBase } from "../firebase";
 
-const notesCollection = collection(fireDataBase, "notes");
-
-export async function fetchNotes() {
-    const snapshot = await getDocs(notesCollection);
-    console.log("snapshot", snapshot);
+export const fetchNotes = async (userId) => {
+  const notesCol = collection(fireDataBase, "users", userId, "notes");
+  const snapshot = await getDocs(notesCol);
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-}
+};
 
-export async function createNote(note) {
-  const docRef = await addDoc(notesCollection, note);
+export const createNote = async (userId, note) => {
+  const notesCol = collection(fireDataBase, "users", userId, "notes");
+  const docRef = await addDoc(notesCol, note);
   return { id: docRef.id, ...note };
-}
+};
 
-export async function updateNote(id, data) {
-  const docRef = doc(fireDataBase, "notes", id);
-  await updateDoc(docRef, data);
-  return {id, ...data};
-}
+export const updateNote = async (userId, noteId, note) => {
+  const noteRef = doc(fireDataBase, "users", userId, "notes", noteId);
+  await updateDoc(noteRef, note);
+};
 
-export async function deleteNote(id) {
-  const docRef = doc(fireDataBase, "notes", id);
-  await deleteDoc(docRef);
-}
+export const deleteNote = async (userId, noteId) => {
+  const noteRef = doc(fireDataBase, "users", userId, "notes", noteId);
+  await deleteDoc(noteRef);
+};

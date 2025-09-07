@@ -6,9 +6,10 @@ import {
   updateNote,
   deleteNote,
 } from "../../services/notesService";
+import toast from "react-hot-toast";
 
 
-export default function NoteForm({ notes, setNotes }) {
+export default function NoteForm({ notes, setNotes, currentUser }) {
   const { notesId } = useParams();
   const [showMessage, setShowMessage] = useState(false);
   const [title, setTitle] = useState("");
@@ -23,10 +24,14 @@ export default function NoteForm({ notes, setNotes }) {
     setPriority(note?.priority || "");
   }, [note]);
 
+  if (!currentUser) {
+    toast.error("Please select a user first");
+  }
+
   const handleBlur = async () => {
     if (!title.trim() && !content.trim()) {
       if (note) {
-        await deleteNote(notesId);
+        await deleteNote(currentUser.id, notesId);
         setNotes((prev) => prev.filter((note) => note.id !== notesId));
       }
       return;
@@ -39,12 +44,14 @@ export default function NoteForm({ notes, setNotes }) {
     };
 
     if (note) {
-      await updateNote(notesId, updatedNote);
+      await updateNote(currentUser.id, notesId, updatedNote);
       setNotes((prev) =>
-        prev.map((note) => (note.id === notesId ? {id:notesId, ...updatedNote} : note))
+        prev.map((note) =>
+          note.id === notesId ? { id: notesId, ...updatedNote } : note
+        )
       );
     } else {
-      const newNote = await createNote(updatedNote);
+      const newNote = await createNote(currentUser.id, updatedNote);
       setNotes((prev) => [...prev, newNote]);
     }
 
