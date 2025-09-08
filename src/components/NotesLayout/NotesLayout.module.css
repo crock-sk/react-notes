@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+}
+
+.wrapper {
+  margin-left: auto;
+  margin-right: 50px;
+  padding-top: 30px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    display: block;
+  }
+}
