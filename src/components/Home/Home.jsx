@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import UserList from "../UserList/UserList";
-import Title from "../Title/Title";
 
-const Home = ({ setCurrentUser, currentUser }) => {
+const Home = ({ setCurrentUser }) => {
   const isMobile = window.innerWidth <= 768;
   const navigate = useNavigate();
 
@@ -15,10 +14,7 @@ const Home = ({ setCurrentUser, currentUser }) => {
   return (
     <div>
       {isMobile ? (
-        <>
-          <Title userName={currentUser?.name} />
-          <UserList handleSelectUser={setCurrentUser} />
-        </>
+        <UserList handleSelectUser={setCurrentUser} />
       ) : (
         <p>Loading...</p>
       )}

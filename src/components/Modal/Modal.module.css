@@ -21,54 +21,10 @@
   box-shadow: 0 1px 17px 1px rgba(0, 0, 0, 0.25);
 }
 
-.title {
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 117%;
-  color: #131927;
-}
-
-.modal p {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 286%;
-  color: #131927;
-}
-
-.subTitle {
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 150%;
-  color: #131927;
-}
-
-.modal input {
-  border: 1.5px solid #e5e7ea;
-  border-radius: 8px;
-  padding: 8px 12px;
-  width: 269px;
-  height: 36px;
-  background-color: #f9fafb;
-}
-
-.modal input::placeholder {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 143%;
-  color: #9ea2ae;
-}
-
-.btn {
-  border-radius: 12px;
-  width: 76px;
-  height: 40px;
-  background-color: #4e61f6;
-  border: none;
-
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 114%;
-  text-align: center;
-  color: #fff;
-  margin-left: 5px;
+@media (max-width: 768px) {
+  .modal {
+    width: 336px;
+    height: 213px;
+    padding: 44px 33px 51px;
+  }
 }

@@ -8,8 +8,16 @@
   padding-top: 30px;
 }
 
+.buttonWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 16px;
+  margin-top: 37px;
+}
+
 @media (max-width: 768px) {
   .container {
     display: block;
   }
 }
+

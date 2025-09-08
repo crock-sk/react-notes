@@ -1,16 +1,18 @@
 import css from "./Title.module.css";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
 
-const Title = ({ text, isOpen, setIsOpen }) => {
-  console.log('text', text);
+const Title = ({ text, showBack = false, setIsOpen }) => {
+  const navigate = useNavigate();
+  const handleBackClick = () => {
+    setIsOpen(false);
+    navigate(-1);
+  }
+
   return (
     <h1 className={css.title}>
-      <Link
-        to="/notes"
-        className={css.arrowButton}
-        onClick={() => setIsOpen(false)}
-      >
-        {isOpen && (
+      {showBack && (
+        <Link to="/notes" className={css.arrowButton} onClick={handleBackClick}>
           <svg
             width="24"
             height="24"
@@ -26,8 +28,8 @@ const Title = ({ text, isOpen, setIsOpen }) => {
               strokeLinejoin="round"
             />
           </svg>
-        )}
-      </Link>
+        </Link>
+      )}
       {text}
     </h1>
   );

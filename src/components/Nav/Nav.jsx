@@ -1,9 +1,13 @@
 import css from "./Nav.module.css";
-import { useState } from "react";
 import Modal from "../Modal/Modal";
+import UserList from "../UserList/UserList";
+import UserForm from "../UserForm/UserForm";
 
-const Nav = ({ currentUser, setCurrentUser }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const Nav = ({ currentUser, setCurrentUser, isModalOpen, setIsModalOpen }) => {
+  const handleSelectUser = (user) => {
+    setCurrentUser(user);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className={css.wrapper}>
@@ -33,12 +37,14 @@ const Nav = ({ currentUser, setCurrentUser }) => {
           strokeLinecap="round"
         />
       </svg>
-      <h3 className={css.title}>{currentUser ? currentUser.name : "None"}</h3>
+      <h3 className={css.name}>{currentUser ? currentUser.name : "None"}</h3>
       {isModalOpen && (
-        <Modal
-          setIsModalOpen={setIsModalOpen}
-          setCurrentUser={setCurrentUser}
-        />
+        <Modal setIsModalOpen={setIsModalOpen} setCurrentUser={setCurrentUser}>
+          <h2 className={css.title}>Switch User</h2>
+          <UserList handleSelectUser={handleSelectUser} />
+          <p>or</p>
+          <UserForm />
+        </Modal>
       )}
     </div>
   );

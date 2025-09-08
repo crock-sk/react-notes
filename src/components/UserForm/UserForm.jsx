@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createUser } from "../../services/usersService";
 import { useUsers } from "../../context/UsersContext";
 
-const UserForm = () => {
+const UserForm = ({ onClose, autoClose = false }) => {
   const [newUser, setNewUser] = useState("");
   const { setUsers } = useUsers();
 
@@ -12,11 +12,15 @@ const UserForm = () => {
     const user = await createUser(newUser.trim());
     setUsers((prev) => [...prev, user]);
     setNewUser("");
+
+    if (autoClose && onClose) {
+      onClose();
+    }
   };
 
   return (
-    <div>
-      <h3 className={css.subTitle}>Add User</h3>
+    <div className={css.wrapper}>
+      <h3 className={css.title}>Add User</h3>
       <input
         className={css.input}
         name="name"
