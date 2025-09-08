@@ -1,7 +1,8 @@
 import css from "./Title.module.css";
 import { Link } from "react-router";
 
-const Title = ({ userName ,isOpen, setIsOpen }) => {
+const Title = ({ text, isOpen, setIsOpen }) => {
+  console.log('text', text);
   return (
     <h1 className={css.title}>
       <Link
@@ -27,7 +28,7 @@ const Title = ({ userName ,isOpen, setIsOpen }) => {
           </svg>
         )}
       </Link>
-      {userName ? userName : "My Notes App"}
+      {text}
     </h1>
   );
 };
